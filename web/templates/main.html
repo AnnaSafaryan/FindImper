@@ -25,9 +25,17 @@
 
 
   <main>
-    <div class="py-5 text-center">
-      <h2>Форма отправки</h2>
-      <p class="lead">Инструкция</p>
+      <div class="col">
+
+    <div class="row py-5 g-5 justify-content-center">
+<!--      <h2>Форма отправки</h2>-->
+        <div class="col-md-6 col-lg-8">
+      <p class="lead text-center">
+          FindImper — инструмент для поиска побуждений в тексте.
+<!--          <br>-->
+          Загрузите текст в структурированном формате, выберите модель-анализатор и получите результат!
+      </p>
+        </div>
     </div>
 
     <div class="row g-5 justify-content-center">
@@ -46,7 +54,7 @@
                 </div>
                 <div class="col col-info">
                   <button type="button" class="btn btn-outline-info" data-bs-toggle="tooltip" data-bs-placement="right"
-                    data-bs-title="Формат">
+                    data-bs-title="Таблица (разделитель — табуляция) со следующими полями: N (номер говорящего), S (пол говорящего), Text, Imperative (опционально для оценки). Для примеров перейдите в FAQ">
                   ?
                   </button>
                 </div>
@@ -55,8 +63,7 @@
             </div>
 <!--            Выбор-->
             <div class="col col-choice">
-              <input class="form-control" type="file" id="file" name="file" accept=".txt,.tsv,.csv"
-                     style="font-size: larger;">
+              <input class="form-control" type="file" id="file" name="file" accept=".txt,.tsv,.csv">
             </div>
           </div>
 <!--          Выбор модели-->
@@ -69,7 +76,7 @@
                 </div>
                 <div class="col col-info">
                   <button type="button" class="btn btn-outline-info" data-bs-toggle="tooltip" data-bs-placement="right"
-                    data-bs-title="Что есть что">
+                    data-bs-title="Разные модели могут даль лучший результат на ваших данных. Для описания моделей перейдите в FAQ">
                     ?
                   </button>
                 </div>
@@ -77,8 +84,7 @@
             </div>
 <!--            Выбор-->
             <div class="col col-choice">
-              <select class="form-select" name="method"
-                      style="font-size: larger;">
+              <select class="form-select" name="method">
                         {% for value, name in methods.items() %}
                             <option value="{{ value }}"
                                 {% if value == method %}
@@ -111,11 +117,11 @@
                     <div class="col">
                     <div class="row">
                         <div class="col col-flex">
-                            <h5>Цифр после запятой в метриках:</h5>
+                            <h5>Точность оценки:</h5>
                         </div>
                         <div class="col col-info">
                             <button type="button" class="btn btn-outline-info" data-bs-toggle="tooltip"
-                                    data-bs-placement="right" data-bs-title="Сколько цифр после запятой">
+                                    data-bs-placement="right" data-bs-title="Количество цифр после запятой в метриках">
                             ?
                             </button>
                         </div>
@@ -125,7 +131,7 @@
                     <div class="col col-choice">
                             <input type="range" class="form-range" min="{{ rounding_min }}" max="{{ rounding_max }}" step="1" list="markers"
                                 id="slider" name="rounding" value="2" oninput="rangevalue.value=value">
-                            <output class="range-out" id="rangevalue" style="font-size: larger;">{{ rounding }}</output>
+                            <output class="range-out" id="rangevalue">{{ rounding }}</output>
                     </div>
 
                 </div>
@@ -155,5 +161,7 @@
 
       </div>
     </div>
+
+      </div>
   </main>
 {% endblock content %}
