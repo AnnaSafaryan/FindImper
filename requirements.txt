@@ -1,0 +1,12 @@
+APScheduler==3.6.3
+Flask==1.1.1
+nltk==3.4
+pymorphy2==0.8
+pymystem3==0.2.0
+rouge_metric==1.0.1
+spacy==3.0.5
+spacy_stanza==1.0.4
+spacy_udpipe==1.0.0
+syntok==1.4.4
+tqdm==4.60.0
+Werkzeug==2.0.2

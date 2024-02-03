@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Anna Safaryan, Polina Belova">
+    <meta name="keywords" content="NLP, natural language processing, computational linguistics,
+    компьютерная лингвистика, русский, обработка естественного языка,
+    Russian, imperative,
+    русский, императив, побудительность, побудительное наклонение, лингвистическая экспертиза" />
+    <link rel="shortcut icon" type="image/x-icon" href="static/images/favicon.ico"/>
+
+    <title>Поиск побуждений</title>
+    </head>
+
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/styles.css">
+
+  <body class="d-flex flex-column min-vh-100">
+
+<!--  Навбар-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Fifth navbar example">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Название</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarsExample05" aria-controls="navbarsExample05"
+                aria-expanded="false" aria-label="Переключить навигацию">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample05">
+<!--          Разделы-->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<!--            Главная-->
+            <li class="nav-item">
+              <a class="nav-link active" id="nav-main" aria-current="page" href="/">Главная</a>
+            </li>
+<!--            FaQ-->
+            <li class="nav-item">
+              <a class="nav-link" id="nav-faq" href="/faq">Инструкция и FAQ</a>
+            </li>
+<!--            О нас-->
+            <li class="nav-item">
+              <a class="nav-link" id="nav-about" href="/about">О нас</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <script src="static/js/jquery-3.6.4.min.js"></script>
+    <script src="static/js/bootstrap.bundle.min.js"></script>
+
+    <div class="overlay" id="loading">
+      <div class="d-flex justify-content-center">
+        <div class="spinner-grow text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+      </div>
+    </div>
+
+
+    </div>
+<!--    Содержимое-->
+    <div id="content" class="container">
+
+        {% block content %}
+
+        {% endblock content %}
+
+    </div>
+<!--      Футер-->
+    <footer class="mt-auto my-5 pt-4 text-muted text-center text-small border-top">
+      <p class="mb-1">Что-то</p>
+    </footer>
+
+  </body>
+
+</html>

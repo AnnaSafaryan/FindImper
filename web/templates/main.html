@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!--    Активация текущей вкладки-->
+    <script>
+        $(document).ready(function(){
+            $(".active").removeClass("active");
+            $("#nav-main").addClass("active");
+        });
+    </script>
+
+<!--  инициализации подсказок для всех data-ds-toggle="tooltip"-->
+    <script>
+        $(function(){
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+<script type="text/javascript">// <![CDATA[
+        function loading(){
+            $("#loading").show();
+            $("#content").hide();
+        }
+// ]]></script>
+
+
+  <main>
+    <div class="py-5 text-center">
+      <h2>Форма отправки</h2>
+      <p class="lead">Инструкция</p>
+    </div>
+
+    <div class="row g-5 justify-content-center">
+
+      <div class="col-md-6 col-lg-8">
+<!--          Форма-->
+        <form method=post enctype="multipart/form-data">
+
+<!--          Выбор файла-->
+          <div class="row">
+<!--            Подпись-->
+            <div class="col mb-3">
+              <div class="row">
+                <div class="col col-flex">
+                  <h5>Выберите файл</h5>
+                </div>
+                <div class="col col-info">
+                  <button type="button" class="btn btn-outline-info" data-bs-toggle="tooltip" data-bs-placement="right"
+                    data-bs-title="Формат">
+                  ?
+                  </button>
+                </div>
+                </div>
+
+            </div>
+<!--            Выбор-->
+            <div class="col col-choice">
+              <input class="form-control" type="file" id="file" name="file" accept=".txt,.tsv,.csv"
+                     style="font-size: larger;">
+            </div>
+          </div>
+<!--          Выбор модели-->
+          <div class="row">
+<!--            Подпись-->
+            <div class="col">
+              <div class="row">
+                <div class="col col-flex">
+                  <h5>Выберите модель</h5>
+                </div>
+                <div class="col col-info">
+                  <button type="button" class="btn btn-outline-info" data-bs-toggle="tooltip" data-bs-placement="right"
+                    data-bs-title="Что есть что">
+                    ?
+                  </button>
+                </div>
+              </div>
+            </div>
+<!--            Выбор-->
+            <div class="col col-choice">
+              <select class="form-select" name="method"
+                      style="font-size: larger;">
+                        {% for value, name in methods.items() %}
+                            <option value="{{ value }}"
+                                {% if value == method %}
+                                    selected="selected"
+                                {% endif %}
+                            >{{ name }}</option>
+                        {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <br>
+
+<!--        Дополнительные параметры    -->
+<!--            Кнопка-->
+        <div class="row">
+          <button class="btn btn-primary btn-lg" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                  aria-expanded="false" aria-controls="collapseExample">
+                  Дополнительные параметры
+          </button>
+        </div>
+<!--            Параметры-->
+        <div class="collapse" id="collapseExample">
+            <p>
+                <br>
+<!--            Округление-->
+                <div class="row">
+    <!--            Подпись-->
+                    <div class="col">
+                    <div class="row">
+                        <div class="col col-flex">
+                            <h5>Цифр после запятой в метриках:</h5>
+                        </div>
+                        <div class="col col-info">
+                            <button type="button" class="btn btn-outline-info" data-bs-toggle="tooltip"
+                                    data-bs-placement="right" data-bs-title="Сколько цифр после запятой">
+                            ?
+                            </button>
+                        </div>
+                    </div>
+                     </div>
+    <!--            Выбор-->
+                    <div class="col col-choice">
+                            <input type="range" class="form-range" min="{{ rounding_min }}" max="{{ rounding_max }}" step="1" list="markers"
+                                id="slider" name="rounding" value="2" oninput="rangevalue.value=value">
+                            <output class="range-out" id="rangevalue" style="font-size: larger;">{{ rounding }}</output>
+                    </div>
+
+                </div>
+            </p>
+        </div>
+
+        <hr class="my-4">
+
+<!--            Анализировать-->
+        <div class="row">
+                <button class="w-10 btn btn-primary btn-lg" onclick="loading();">
+                    Анализировать
+                </button>
+            </div>
+
+      </form>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <p>
+            {% for category, message in messages %}
+                <div class="card {{ category }}">{{ message }}</div>
+            {% endfor %}
+          </p>
+        {% endif %}
+      {% endwith %}
+
+      </div>
+    </div>
+  </main>
+{% endblock content %}

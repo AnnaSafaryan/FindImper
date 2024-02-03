@@ -1,0 +1,141 @@
+.btn-outline-info {
+    --bs-btn-color: #0d6efd;
+    --bs-btn-border-color: #0d6efd;
+    --bs-btn-hover-color: #f8f9fa;
+    --bs-btn-hover-bg: #0d6efd;
+    --bs-btn-hover-border-color: #0d6efd;
+    --bs-btn-active-color: #f8f9fa;
+    --bs-btn-active-bg: #0d6efd;
+    --bs-btn-active-border-color: #0d6efd;
+}
+
+.col-info {
+      display: flex;
+	  align-items: center;
+}
+
+.col-choice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 2em;
+}
+
+.col-flex {
+    display: flex;
+    align-items: center;
+}
+
+.error {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    color: red;
+    text-align: center;
+    font-size: x-large;
+    border-color: red;
+}
+
+.py-10 {
+    padding-top: 10rem !important;
+    padding-bottom: 10rem !important;
+}
+.form-control[type=file] {
+    margin-bottom: auto;
+}
+
+.form-range {
+    width: 90%;
+}
+.form-range:focus::-webkit-slider-thumb {
+    background: #0d6efd;
+}
+
+.range-out {
+    inline-size: auto;
+}
+
+.larger-font {
+    font-size: larger;
+}
+
+.nav-item {
+    font-size: 1.25rem;
+}
+
+
+h5 {
+    margin-top: auto;
+}
+
+.table th:first-child,
+.table td:first-child {
+  position: sticky;
+  left: 0;
+  background-color: #ffffff;
+}
+
+td {
+    vertical-align: middle;
+    font-size: larger;
+    text-align: center;
+}
+
+th {
+    vertical-align: middle;
+    font-size: larger;
+    text-align: center;
+}
+
+.table-hover {
+    --bs-table-hover-color: #0d6efd;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    top: 40%;
+    left: 0px;
+ }
+
+.spinner-border{
+    width: 3rem;
+    height: 3rem;
+    z-index: 20;
+    animation-duration: 3s;
+}
+
+.nav-item {
+  float: left;
+  position: relative;
+  padding: 10px 20px;
+  overflow: hidden;
+}
+
+
+.nav-item::after {
+  background-color: #0d6efd;
+  content: "";
+  width: 0;
+  height: 3px;
+  left: 0;
+  bottom: 0;
+  transition: width 0.35s ease 0s;
+  position: absolute;
+}
+
+.nav-item:hover::after {
+  width: 100%;
+}
+
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.button-col {
+    text-align: center;
+}
