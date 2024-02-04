@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 app.secret_key = secret_key.encode()
 app.config['UPLOAD_FOLDER'] = data_path
-# app.config['SCHEDULER_API_INTERVAL'] = check_time
+app.config['SCHEDULER_API_INTERVAL'] = check_time
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -120,17 +120,17 @@ def result():
         return render_template('500.html', page_name='/500'), 500
 
 
-# @app.after_request
-# def clean(response):
-#     # TODO: ломает скачивание результата, но не архива
-#     # print(request.endpoint)
-#     paths = session.get('paths')
-#     if request.endpoint == "result":
-#         clean_files(paths)
-#         # except FileNotFoundError:
-#         #     redirect("/")
-#
-#     return response
+@app.after_request
+def clean(response):
+    # TODO: ломает скачивание результата, но не архива
+    # print(request.endpoint)
+    paths = session.get('paths')
+    if request.endpoint == "result":
+        clean_files(paths)
+        # except FileNotFoundError:
+        #     redirect("/")
+
+    return response
 
 
 @app.errorhandler(500)
@@ -156,9 +156,9 @@ def cleaning():
                 os.remove(filepath)
 
 
-# scheduler = BackgroundScheduler()
-# scheduler.add_job(func=cleaning, trigger="interval", seconds=check_time)
-# scheduler.start()
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=cleaning, trigger="interval", seconds=check_time)
+scheduler.start()
 
 if __name__ == "__main__":
     app.run(port=80)
