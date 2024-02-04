@@ -1,13 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!--    Активация текущей вкладки-->
-    <script>
-        $(document).ready(function(){
-            $(".active").removeClass("active");
-            $("#nav-main").addClass("active");
-        });
-    </script>
 
 <!--  инициализации подсказок для всех data-ds-toggle="tooltip"-->
     <script>
@@ -32,7 +25,6 @@
         <div class="col-md-6 col-lg-8">
       <p class="lead text-center">
           FindImper — инструмент для поиска побуждений в тексте.
-<!--          <br>-->
           Загрузите текст в структурированном формате, выберите модель-анализатор и получите результат!
       </p>
         </div>

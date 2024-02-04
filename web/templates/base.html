@@ -19,6 +19,14 @@
 
   <body class="d-flex flex-column min-vh-100">
 
+<!--    Активация текущей вкладки-->
+    <script>
+        $(document).ready(function(){
+            $(".active").removeClass("active");
+            $("#nav-main").addClass("active");
+        });
+    </script>
+
 <!--  Навбар-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Fifth navbar example">
       <div class="container-fluid">
