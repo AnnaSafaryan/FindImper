@@ -77,7 +77,7 @@ def tok_corpus(corpus):
     for i in tqdm(corpus['texts'], desc='Токенизируем строки'):
         raw_sents = []  # предложения внутри реплики
         for sent_elem in sentenize(corpus['texts'][i]):  # принудительно делим по многоточию
-            sent = sent_elem[-1]
+            sent = sent_elem.text
             # print(sent)
             if '…' in sent:
                 raw_sents.extend([s for s in sent.split('…') if s])
