@@ -1,4 +1,4 @@
-from syntok.tokenizer import Tokenizer
+# from syntok.tokenizer import Tokenizer
 
 # tok = Tokenizer()
 # # optional: keep "n't" contractions and "-", "_" inside words as tokens

@@ -1,5 +1,5 @@
 from tqdm import tqdm
-from nltk import sent_tokenize, word_tokenize
+from razdel import sentenize, tokenize
 from collections import defaultdict
 from operator import add, sub
 
@@ -76,7 +76,8 @@ def tok_corpus(corpus):
                    'imps': {}}
     for i in tqdm(corpus['texts'], desc='Токенизируем строки'):
         raw_sents = []  # предложения внутри реплики
-        for sent in sent_tokenize(corpus['texts'][i]):  # принудительно делим по многоточию
+        for sent_elem in sentenize(corpus['texts'][i]):  # принудительно делим по многоточию
+            sent = sent_elem[-1]
             # print(sent)
             if '…' in sent:
                 raw_sents.extend([s for s in sent.split('…') if s])
@@ -87,7 +88,7 @@ def tok_corpus(corpus):
 
         sents = join_contr(raw_sents)
         for sent in sents:
-            toks = word_tokenize(sent)
+            toks = tokenize(sent)
             corpus_toks['texts'][i].append({'sent': sent, 'toks': toks})
 
         line_imps = corpus['imps'][i].split('.')
