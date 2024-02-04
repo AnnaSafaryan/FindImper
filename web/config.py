@@ -5,7 +5,7 @@ def dict_param(param_str):
     return {el.split(':')[0]: el.split(':')[1] for el in param_str.split(', ')}
 
 
-config = configparser.RawConfigParser()
+config = configparser.ConfigParser()
 config.read("config_front.cfg", encoding="utf-8")
 
 exts = config.get('Files and directories', 'extensions').split(', ')
@@ -14,9 +14,10 @@ data_path = config.get('Files and directories', 'data_path')
 check_time = config.getint('Working parameters', 'check_time')
 secret_key = open(config.get('Working parameters', 'secret_key_file'), encoding="utf-8").read()
 verbose = config.get('Working parameters', 'verbose')
-if verbose == 'False':
+if verbose == 'False':  # для консистентности: везде строки
     verbose = ''
-
+port = config.getint('Working parameters', 'port')
+debug = config.getboolean('Working parameters', 'debug')
 
 method2name = dict_param(config.get('Search parameters', 'methods'))
 

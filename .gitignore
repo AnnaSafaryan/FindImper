@@ -160,6 +160,7 @@ secret_key
 
 #Data
 data/
+web/files/
 
 #My
 */exp.py

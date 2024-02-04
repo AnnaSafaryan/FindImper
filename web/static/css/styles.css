@@ -125,7 +125,6 @@ th {
   color: #0d6efd;
   text-shadow: 1px 0 0px #fff, 0 1px 0px #fff, -1px 0 0px #fff, 0 -1px 0px #fff;
 }
-}
 
 .nav-item {
   float: left;
@@ -158,4 +157,9 @@ th {
 
 .button-col {
     text-align: center;
+}
+
+.lead {
+  font-size: 1.6rem;
+  font-weight: 400;
 }

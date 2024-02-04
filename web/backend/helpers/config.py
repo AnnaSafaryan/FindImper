@@ -1,5 +1,4 @@
 import configparser
 
-config = configparser.RawConfigParser()
+config = configparser.ConfigParser()
 config.read("backend/config_back.cfg", encoding="utf-8")
-

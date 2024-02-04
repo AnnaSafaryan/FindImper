@@ -13,6 +13,8 @@ app = Flask(__name__)
 app.secret_key = secret_key.encode()
 app.config['UPLOAD_FOLDER'] = data_path
 app.config['SCHEDULER_API_INTERVAL'] = check_time
+app.config['PORT'] = port
+app.config['DEBUG'] = debug
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -161,4 +163,4 @@ scheduler.add_job(func=cleaning, trigger="interval", seconds=check_time)
 scheduler.start()
 
 if __name__ == "__main__":
-    app.run(port=80)
+    app.run(port=app.config['PORT'], debug=app.config['DEBUG'])
