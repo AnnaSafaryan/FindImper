@@ -44,7 +44,11 @@ def search():
 
             else:
                 filename = get_filename(file)
-                file.save(path.join(data_path, filename))
+                try:
+                    file.save(path.join(data_path, filename))
+                except FileNotFoundError:
+                    os.mkdir(data_path)
+                    file.save(path.join(data_path, filename))
 
                 context = {
                     "filename": filename,
