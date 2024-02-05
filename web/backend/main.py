@@ -3,6 +3,13 @@
 #  слово + следующий глагол до инфинитива в этой части
 #  точно не подчинительный?
 #  сочинительные -- все императив?
+import logging
+
+# TODO: форматы в конфиг
+logging.basicConfig(level=logging.INFO,
+                    # filename="log_back.log", filemode="w",
+                    datefmt='%d/%m/%Y %H:%M:%S',
+                    format="%(asctime)s : %(levelname)s : %(message)s")
 
 
 def search_imps(filename,
@@ -26,20 +33,26 @@ def search_imps(filename,
 
     model = build_morph(method)
     morph = model(neg_list, stop_list, need_list, filter_dict)
+    logging.info("MODEL: {}".format(morph.name.upper()))
     if verbose:
         print(morph.name.upper())
 
     paths = resolve_paths(filename, data_path, morph.name)
-    # print(paths)
+    logging.info("PATHS: {}".format(paths))
     # TODO: Дважды храним тексты, проще в токс или препс внести метаданные
     raw_data, fields = intelly_read_file(paths)
-    toks = load_toks(raw_data, paths, tok_forced)
+    toks, ers = load_toks(raw_data, paths, tok_forced)
+    # if ers:
+    #     # TODO: свою ошибку
+    #     raise IndexError
+
     preps = load_preps(toks, morph, paths, prep_forced)
     res_imps = []
     score_data = {'refs': [], 'hyps': []}
     if 'Imperative' not in fields:
         test = False
         fields = tuple(list(fields) + ['Imperative'])
+    logging.info("TEST: {}".format(test))
 
     for i, line in tqdm(preps.items(), desc='Анализируем строки', colour='green'):
         line_imps = [[]] * len(preps[i])

@@ -8,6 +8,14 @@ from backend.main import search_imps
 from utils import *
 from config import *
 
+import logging
+
+# TODO: форматы в конфиг
+logging.basicConfig(level=logging.INFO,
+                    # filename="log_back.log", filemode="w",
+                    datefmt='%d/%m/%Y %H:%M:%S',
+                    format="%(asctime)s : %(levelname)s : %(message)s")
+
 app = Flask(__name__)
 
 app.secret_key = secret_key.encode()
@@ -20,7 +28,7 @@ app.config['DEBUG'] = debug
 @app.route('/', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
-        print('start', request.values, request.files, request.url, sep='\n')
+        # print('start', request.values, request.files, request.url, sep='\n')
 
         file = request.files.get('file', None)
         if not file:
@@ -61,36 +69,44 @@ def search():
                     "rounding": request.values['rounding']
                 }
 
-                metrics, paths = search_imps(filename=context["filename"],
-                                             method=request.values['method'],
-                                             tok_forced=context["tok_forced"],
-                                             prep_forced=context["prep_forced"],
-                                             # sm_func=context["sm_func"],
-                                             rounding=int(context["rounding"]),
-                                             test=context["test"],
-                                             verbose=verbose
-                                             )
-                if metrics:
-                    # print(metrics)
-                    context["metrics"] = [{'name': metric2name[metric['name']],
-                                           'r': metric['r'],
-                                           'p': metric['p'],
-                                           'f': metric['f'],
-                                           }
-                                          for metric in metrics]
-                else:
-                    context["metrics"] = metrics
+                logging.info([context, verbose])
 
-                session["paths"] = paths
+                try:
+                    metrics, paths = search_imps(filename=context["filename"],
+                                                 method=request.values['method'],
+                                                 tok_forced=context["tok_forced"],
+                                                 prep_forced=context["prep_forced"],
+                                                 # sm_func=context["sm_func"],
+                                                 rounding=int(context["rounding"]),
+                                                 test=context["test"],
+                                                 verbose=verbose,
+                                                 )
+                    if metrics:
+                        # print(metrics)
+                        context["metrics"] = [{'name': metric2name[metric['name']],
+                                               'r': metric['r'],
+                                               'p': metric['p'],
+                                               'f': metric['f'],
+                                               }
+                                              for metric in metrics]
+                    else:
+                        context["metrics"] = metrics
 
-                return render_template('result.html', **context, page_name='/result')
+                    session["paths"] = paths
+
+                    return render_template('result.html', **context, page_name='/result')
+
+                # TODO: отдельную страницу
+                except IndexError:
+                    flash('Ошибка разметки', 'error')
+                    return redirect(request.url)
 
     return render_template('main.html', **params, **def_params, page_name='/')
 
 
 @app.route('/result', methods=['GET', 'POST'])
 def result():
-    print('res', request.values, request.files, request.url, sep='\n')
+    # print('res', request.values, request.files, request.url, sep='\n')
 
     choice = request.values['download']
     paths = session.get('paths')

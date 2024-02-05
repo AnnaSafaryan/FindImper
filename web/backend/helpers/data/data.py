@@ -2,9 +2,17 @@ from tqdm import tqdm
 from razdel import sentenize, tokenize
 from collections import defaultdict
 from operator import add, sub
+import logging
+
+# TODO: форматы в конфиг
+logging.basicConfig(level=logging.INFO,
+                    filename="log_back.log", filemode="w",
+                    datefmt='%d/%m/%Y %H:%M:%S',
+                    format="%(asctime)s : %(levelname)s : %(message)s")
 
 
 def if_store(line_lists):
+    """Есть ли в ячейке императивов инфа"""
     line_elems = set()
     for e in line_lists:
         if e:
@@ -20,12 +28,12 @@ def join_contr(sents):
         # если в строке что-то ещё есть
         if contr != sents[i]:
             # но не последнее
-            if i != len(sents)-1:
+            if i != len(sents) - 1:
                 if sents[i].endswith(contr):
-                    new_sents.append(sents[i] + " " + sents[i+1])
+                    new_sents.append(sents[i] + " " + sents[i + 1])
                     i += 1
                 elif sents[i].endswith(contr[:-1]):
-                    new_sents.append(sents[i]+sents[i+1])
+                    new_sents.append(sents[i] + sents[i + 1])
                     i += 1
                 else:
                     new_sents.append(sents[i])
@@ -74,6 +82,8 @@ def tok_corpus(corpus):
     """
     corpus_toks = {'texts': defaultdict(list),
                    'imps': {}}
+    ers = []  # ошибки разметки
+
     for i in tqdm(corpus['texts'], desc='Токенизируем строки'):
         raw_sents = []  # предложения внутри реплики
         for sent_elem in sentenize(corpus['texts'][i]):  # принудительно делим по многоточию
@@ -88,33 +98,34 @@ def tok_corpus(corpus):
 
         sents = join_contr(raw_sents)
         for sent in sents:
-            toks = tokenize(sent)
+            toks = [tok.text for tok in tokenize(sent)]
             corpus_toks['texts'][i].append({'sent': sent, 'toks': toks})
 
         line_imps = corpus['imps'][i].split('.')
         sent_imps = [[]] * len(corpus_toks['texts'][i])
-        ers = []
         if if_store(line_imps):  # если в столбце побуждений не пустая строка
             for sent in line_imps:
                 if sent.strip():
                     num, imp = sent.split(':')
-                    num = int(num.strip())-1  # в разметке реальные номера, а не с 0
+                    num = int(num.strip()) - 1  # в разметке реальные номера, а не с 0
                     imps = [w.strip() for w in imp.split(',') if w.strip() != '']
                     try:
                         sent_imps[num] = imps
                     except IndexError:
-                        ers.append((len(sent_imps), num, sent, corpus['texts'][i]))
-                        print(ers[-1])
+                        ers.append({'номер': i,
+                                    'строка': corpus['texts'][i],
+                                    'предложений': len(sent_imps),
+                                    'императив': sent,
+                                    })
 
             corpus_toks['imps'][i] = sent_imps
         else:
             corpus_toks['imps'][i] = sent_imps
 
-        if ers:
-            print('\nИСПРАВЬТЕ РАЗМЕТКУ!')
-            exit(1)
+    if ers:
+        logging.error('Ошибок разметки: {}'.format(len(ers)))
 
-    return corpus_toks
+    return corpus_toks, ers
 
 
 def prep_corpus(corpus, morph):
@@ -224,4 +235,3 @@ def format_metric(score_dicts):
                           score_dict['p'],
                           score_dict['f'])
          for score_dict in score_dicts])
-
