@@ -4,6 +4,9 @@ from collections import defaultdict
 from operator import add, sub
 import logging
 
+import nltk
+nltk.download('punkt')
+
 # TODO: форматы в конфиг
 logging.basicConfig(level=logging.INFO,
                     filename="log_back.log", filemode="w",
