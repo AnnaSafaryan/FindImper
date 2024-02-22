@@ -1,6 +1,6 @@
 APScheduler==3.6.3
 Flask==1.1.1
-nltk==3.4
+nltk==3.6.6
 pymorphy2==0.8
 pymystem3==0.2.0
 razdel==0.5.0

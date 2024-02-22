@@ -97,7 +97,7 @@ def search_imps(filename,
     metrics = []
     if test:
         metrics = scoring(score_data['refs'], score_data['hyps'], int(rounding))
-        # write_metrics(metrics, paths, verbose=verbose)
+        write_metrics(metrics, paths, verbose=verbose)
     res_dicts = format_res(res_imps, raw_data, fields)
     write_res(res_dicts, fields, paths)
 

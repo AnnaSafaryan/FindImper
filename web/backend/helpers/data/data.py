@@ -1,5 +1,5 @@
 from tqdm import tqdm
-from razdel import sentenize, tokenize
+from nltk import sent_tokenize, word_tokenize
 from collections import defaultdict
 from operator import add, sub
 import logging
@@ -86,9 +86,7 @@ def tok_corpus(corpus):
 
     for i in tqdm(corpus['texts'], desc='Токенизируем строки'):
         raw_sents = []  # предложения внутри реплики
-        for sent_elem in sentenize(corpus['texts'][i]):  # принудительно делим по многоточию
-            sent = sent_elem.text
-            # print(sent)
+        for sent in sent_tokenize(corpus['texts'][i]):  # принудительно делим по многоточию
             if '…' in sent:
                 raw_sents.extend([s for s in sent.split('…') if s])
             elif '...' in sent:
@@ -98,7 +96,7 @@ def tok_corpus(corpus):
 
         sents = join_contr(raw_sents)
         for sent in sents:
-            toks = [tok.text for tok in tokenize(sent)]
+            toks = word_tokenize(sent)
             corpus_toks['texts'][i].append({'sent': sent, 'toks': toks})
 
         line_imps = corpus['imps'][i].split('.')
@@ -228,6 +226,7 @@ def format_res(res_imps, raw_data, fields):
 
 
 def format_metric(score_dicts):
+    logging.info(score_dicts)
     score_str = '{}:\t{}\t{}\t{}'
     return '\n'.join(
         [score_str.format(score_dict['name'],

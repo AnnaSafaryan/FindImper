@@ -99,7 +99,7 @@ def load_toks(data, paths, tok_forced=False):
             logging.info('{} errors saved in {}'.format(len(ers), ers_path))
         else:
             jdump(toks, open(tok_path, 'w', encoding='utf-8'), indent=4)
-            logging.info('{} lines saved in {}'.format(len(toks), tok_path))
+            logging.info('{} lines saved in {}'.format(len(toks['texts']), tok_path))
 
     return toks, ers
 

@@ -13,9 +13,11 @@ def scoring(refs, hyps, round_n):
             refs_empt.append(ref)
             hyps_empt.append(hyp)
 
-    metrics_rouge = score_rouge(refs_raw, hyps_raw, 3)  # recall
-    metrics_bleu = score_bleu(refs_raw, hyps_raw, '0', 3)  # precision
+    metrics_rouge = score_rouge(refs_raw, hyps_raw, round_n)  # recall
+    # metrics_bleu = score_bleu(refs_raw, hyps_raw, '0', round_n)  # precision
 
-    print(metrics_rouge)
-    print(metrics_bleu)
+    # print(metrics_rouge)
+    # print(metrics_bleu)
+    # TODO: обе?
+    return metrics_rouge
 

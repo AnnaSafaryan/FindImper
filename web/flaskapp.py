@@ -97,7 +97,7 @@ def search():
                     return render_template('result.html', **context, page_name='/result')
 
                 # TODO: отдельную страницу
-                except IndexError:
+                except IndexError or KeyError:
                     flash('Ошибка разметки', 'error')
                     return redirect(request.url)
 
@@ -114,10 +114,23 @@ def result():
     try:
         if choice == 'r':
             res_file = get_filepath('res_file', paths)
+
+            stream = BytesIO()
+            with ZipFile(stream, 'w') as zf:
+                for file in [res_file]:
+                    zf.write(file, path.basename(file))
+            stream.seek(0)
+
             return send_file(
-                res_file,
+                stream,
                 as_attachment=True,
-                download_name=paths['res_file'])
+                download_name='{}.zip'.format(path.splitext(paths['res_file'])[0])
+            )
+
+            # return send_file(
+            #     res_file,
+            #     as_attachment=True,
+            #     download_name=paths['res_file'])
 
         elif choice == 'm':
             res_file = get_filepath('res_file', paths)
@@ -139,7 +152,7 @@ def result():
             return redirect('/')
 
     except FileNotFoundError:
-        return render_template('500.html', page_name='/500'), 500
+        return render_template('404.html', page_name='/404'), 404
 
 
 @app.after_request
@@ -148,13 +161,15 @@ def clean(response):
     # print(request.endpoint)
     paths = session.get('paths')
     if request.endpoint == "result":
-        clean_files(paths)
-        # except FileNotFoundError:
-        #     redirect("/")
+        try:
+            clean_files(paths)
+        except FileNotFoundError:
+            redirect("/")
 
     return response
 
 
+# TODO: надо?
 @app.errorhandler(500)
 def not_found_error(error):
     return render_template('500.html', page_name='/500'), 500

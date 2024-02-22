@@ -1,3 +1,4 @@
+import logging
 import time
 from werkzeug.utils import secure_filename
 from os import path, remove
@@ -28,8 +29,9 @@ def check_file(file, period):
 
 def clean_files(paths_dict):
     if path.isfile(get_filepath('data_file', paths_dict)):
-        files_to_remove = ['data_file', 'res_file', 'metric_file']
-        for filename in files_to_remove:
-            remove(get_filepath(filename, paths_dict))
-
-
+        names_to_remove = ['data_file', 'res_file', 'metric_file']
+        files_to_remove = [get_filepath(filename, paths_dict) for filename in names_to_remove]
+        for file in files_to_remove:
+            if path.exists(file):
+                logging.info('Cleaning {}'.format(file))
+                remove(file)
