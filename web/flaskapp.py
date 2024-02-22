@@ -82,7 +82,6 @@ def search():
                                                  verbose=verbose,
                                                  )
                     if metrics:
-                        # print(metrics)
                         context["metrics"] = [{'name': metric2name[metric['name']],
                                                'r': metric['r'],
                                                'p': metric['p'],
@@ -97,9 +96,8 @@ def search():
                     return render_template('result.html', **context, page_name='/result')
 
                 # TODO: отдельную страницу
-                except IndexError or KeyError:
-                    flash('Ошибка разметки', 'error')
-                    return redirect(request.url)
+                except (IndexError, KeyError):
+                    return render_template('markup.html', page_name='/500'), 500
 
     return render_template('main.html', **params, **def_params, page_name='/')
 

@@ -41,6 +41,7 @@ def search_imps(filename,
     logging.info("PATHS: {}".format(paths))
     # TODO: Дважды храним тексты, проще в токс или препс внести метаданные
     raw_data, fields = intelly_read_file(paths)
+    fields = tuple(field for field in fields if field)
     toks, ers = load_toks(raw_data, paths, tok_forced)
     # if ers:
     #     # TODO: свою ошибку
