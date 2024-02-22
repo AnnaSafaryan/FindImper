@@ -77,6 +77,8 @@ class Pym(RuleBasedModel):
             return True
         #  TODO: прописать больше условий из ФСП?
         elif tok['info']['tense'] == 'pres' or tok['info']['tense'] == 'futr':
-            return True
+            # не 1 л. ед. ч.
+            if tok['word'][-1] not in ['у', 'ю']:
+                return True
         elif tok['word'] in self.needs:
             return True
