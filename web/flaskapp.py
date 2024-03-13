@@ -95,7 +95,7 @@ def search():
 
                     return render_template('result.html', **context, page_name='/result')
 
-                # TODO: отдельную страницу
+                # TODO: указывать ошибки разметки
                 except (IndexError, KeyError):
                     return render_template('markup.html', page_name='/500'), 500
 
@@ -175,12 +175,12 @@ def not_found_error(error):
 
 @app.route('/faq')
 def faq():
-    return render_template('faq.html', page_name='faq')
+    return render_template('faq.html', page_name='/faq')
 
 
 @app.route('/about')
 def about():
-    return render_template('about.html', page_name='about')
+    return render_template('about.html', page_name='/about')
 
 
 def cleaning():
