@@ -83,6 +83,7 @@ def search():
                                                  )
                     if metrics:
                         context["metrics"] = [{'name': metric2name[metric['name']],
+                                               'desc': metric2desc[metric['name']],
                                                'r': metric['r'],
                                                'p': metric['p'],
                                                'f': metric['f'],

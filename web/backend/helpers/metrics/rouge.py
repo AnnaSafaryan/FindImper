@@ -13,7 +13,7 @@ def scoring(refs_raw, hyps_raw, round_n):
     hyps = prep_hyps(hyps_raw)
     refs = prep_refs(refs_raw)
     rouge = PyRouge(rouge_n=(1, 2), rouge_l=True, rouge_w=False,
-                    rouge_w_weight=1.2, rouge_s=True, rouge_su=True, skip_gap=1)
+                    rouge_s=False, rouge_su=True, skip_gap=1)
     scores = rouge.evaluate_tokenized(hyps, refs)
 
     return [{'name': name,

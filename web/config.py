@@ -35,4 +35,5 @@ def_params = {'method': config.get('Default parameters', 'def_method'),
               'test': config.getboolean('Default parameters', 'def_test'),
               }
 
-metric2name = dict_param(config.get('Eval parameters', 'metrics'))
+metric2name = dict_param(config.get('Eval parameters', 'metric_names'))
+metric2desc = dict_param(config.get('Eval parameters', 'metric_descs'))
