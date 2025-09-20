@@ -156,7 +156,7 @@ cython_debug/
 virtualenv.pyz
 
 #Secret
-secret_key
+**secret_key
 
 #Data
 data/
